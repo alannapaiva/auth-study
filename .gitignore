@@ -1,0 +1,8 @@
+# dependencies
+backend/node_modules
+frontend/node_modules
+
+# other files
+backend/src/database/dev.sqlite3
+backend/package-lock.json
+frontend/package-lock.json
