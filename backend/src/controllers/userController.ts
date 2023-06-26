@@ -12,10 +12,15 @@ export const userController = {
     return res.json(user);
   },
   async login(req: Request, res: Response) {
-    const { email, password } = req.body;
+    const { email, password, admin } = req.body;
     const [user] = await connection("users")
       .select("*")
-      .andWhere((q) => q.where("email", email).where("password", password));
+      .andWhere((q) =>
+        q
+          .where("email", email)
+          .where("password", password)
+          .where("admin", admin)
+      );
     return res.json(user);
   },
   async store(req: Request, res: Response) {
