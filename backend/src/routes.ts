@@ -3,7 +3,7 @@ import { userController } from "./controllers/userController";
 
 const routes = Router();
 
-routes.get("/users/login", userController.login);
+routes.post("/users/login", userController.login);
 routes.get("/users", userController.show);
 routes.get("/users/:id", userController.index);
 routes.post("/users", userController.store);

@@ -13,7 +13,7 @@ API de CRUD de usuário simples.
 A API roda em [http://localhost:5000/users](http://localhost:5000/users).
 
 A API tem 6 rotas, você pode vê-las no arquivo src/routes.ts, mas elas são:
-- GET ```/users/login``` que recebe um email e senha e retorna o(a) usuário(a) caso encontrado;
+- POST ```/users/login``` que recebe um email, senha e se é admin ou não e retorna o(a) usuário(a) caso encontrado;
 - GET ```/users``` que retorna todos os usuários cadastrados;
 - GET ```/users/:id``` que retorna o usuário(a) do id informado caso encontrado(a);
 - POST ```/users``` que recebe um corpo com os dados do(a) usuário(a) e cadastra no banco de dados;
