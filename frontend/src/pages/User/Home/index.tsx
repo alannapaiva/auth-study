@@ -8,7 +8,9 @@ export const Home = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const handleUpdate = () => {};
-  const handleLogOut = () => {};
+  const handleLogOut = () => {
+    window.location.href = "/";
+  };
   const handleDelete = () => {};
 
   return (
