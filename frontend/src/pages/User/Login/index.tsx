@@ -1,14 +1,40 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { PageRoutes } from "@/pages";
+import { iUser } from "@/config/types";
+import { UserContext } from "@/contexts/user";
 
 export const LoginUser = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {setUser, userLogging, setUserLogging} = useContext(UserContext);
+  const [userLogged, setUserLogged] = useState<iUser>({email: "", password: "", admin: false, name: "" });
+  
+  const handleInputData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUserLogged((prevUser) => ({ ...prevUser, [name]: value }));
+  };
+  
+  const handleLogin = async () => {
+    try {
+      const response = fetch("http://localhost:5000/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userLogged),
+      }).then((response) => response.json())
+      .then((userLogged) => {
+        if (userLogged) 
+        setUserLogging(true);
+        alert("Bem vindo(a) de volta!");
+        window.location.href = "/home";
+      });
 
-  const handleLogin = () => {};
+    } catch (error) {
+      console.error("Erro:", error);
+    }
+  };
 
   return (
     <Box
@@ -29,14 +55,16 @@ export const LoginUser = () => {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
         <TextField
           type="email"
-          onChange={(event) => setEmail(event.target.value)}
-          value={email}
+          name="email"
+          onChange={handleInputData}
+          value={userLogged.email}
           placeholder="informe seu email"
         />
         <TextField
           type="password"
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
+          name="password"
+          onChange={handleInputData}
+          value={userLogged.password}
           placeholder="informe sua senha"
         />
         <Button onClick={handleLogin}>Log IN</Button>

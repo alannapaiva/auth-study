@@ -13,7 +13,7 @@ export const SigninAdmin = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [newAdmin, setNewAdmin] = useState<iUser>({ name: "", admin: true, email: "", password: ""});
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputData = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
     setNewAdmin((prevUser) => ({...prevUser, [name]: value}))
   };
@@ -73,14 +73,14 @@ export const SigninAdmin = () => {
         <TextField
           type="email"
           name="name"
-          onChange={handleInputChange}
+          onChange={handleInputData}
           value={newAdmin.name}
           placeholder="informe seu email"
         />
         <TextField
           type="password"
           name="password"
-          onChange={handleInputChange}
+          onChange={handleInputData}
           value={newAdmin.password}
           placeholder="informe sua senha"
         />

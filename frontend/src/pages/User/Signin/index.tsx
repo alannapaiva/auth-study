@@ -9,13 +9,13 @@ export const SigninUser = () => {
   const [newUser, setNewUser] = useState<iUser>({ name: "", admin: false, email: "", password: ""});
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputData = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
     setNewUser((prevUser) => ({...prevUser, [name]: value}))
   };
 
   const handleSignin = async () => {
-    console.log("dados no new user:", newUser)
+    console.log("dados do novo usuario:", newUser)
     if (newUser.password !== passwordConfirmation) {
       console.error('A senha e a confirmação de senha não correspondem');
       alert('A senha e a confirmação de senha não correspondem');
@@ -33,10 +33,10 @@ export const SigninUser = () => {
           if (response.ok) {
             const userData = response.json();
           } else {
-            console.error("erro de cadastro")
+            console.error("erro de cadastro!!!")
           }
         } catch(error) {
-          console.log("Erro", error);
+          console.log("Erro!!!", error);
         };
         console.log("handle sign in");
     }
@@ -61,13 +61,13 @@ export const SigninUser = () => {
           type="text"
           name="name"
           value={newUser.name}
-          onChange={handleInputChange}
+          onChange={handleInputData}
           placeholder="informe seu nome"
         />
         <TextField
           type="email"
           name="email"
-          onChange={handleInputChange}
+          onChange={handleInputData}
           value={newUser.email}
           placeholder="informe seu email"
         />
@@ -75,7 +75,7 @@ export const SigninUser = () => {
           type="password"
           name="password"
           value={newUser.password}
-          onChange={handleInputChange}
+          onChange={handleInputData}
           placeholder="informe sua senha"
         />
         <TextField
