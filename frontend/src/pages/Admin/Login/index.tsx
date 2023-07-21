@@ -7,12 +7,12 @@ import { iUser } from "@/config/types";
 import { PageRoutes } from "@/pages";
 
 export const LoginAdmin = () => {
-  const {setUser} = useContext(UserContext);
-  const [userLogged, setUserLogged] = useState<iUser>({email: "", password: "", admin: true, name: "" });
+  const {setUser, setUserLogging, adminLogging ,setAdminLogging} = useContext(UserContext);
+  const [adminLogged, setAdminLogged] = useState<iUser>({email: "", password: "", admin: true, name: "" });
 
   const handleInputData = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setUserLogged((prevUser) => ({ ...prevUser, [name]: value }));
+    setAdminLogged((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
   const handleLogin = async () => {
@@ -22,15 +22,17 @@ export const LoginAdmin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userLogged),
+        body: JSON.stringify(adminLogged),
       }).then((response) => response.json())
       .then((userLogged) => {
-        if (userLogged) 
+        if (userLogged) {  
+          setAdminLogged(userLogged);
           alert("Bem vindo(a),"+userLogged.name+"!"); 
+          window.location.href = "/dashboard"
+        }
         setUser(userLogged);
-        console.log("usuario: ", userLogged)
+        console.log("Usuario: ", userLogged)
       });
-
     } catch (error) {
       console.error("Erro:", error);
     }
@@ -57,14 +59,14 @@ export const LoginAdmin = () => {
           type="email"
           name="email"
           onChange={handleInputData}
-          value={userLogged.email}
+          value={adminLogged.email}
           placeholder="informe seu email"
         />
         <TextField
           type="password"
           name="password"
           onChange={handleInputData}
-          value={userLogged.password}
+          value={adminLogged.password}
           placeholder="informe sua senha"
         />
         <Button onClick={handleLogin}>Log IN</Button>

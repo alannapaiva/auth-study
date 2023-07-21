@@ -6,21 +6,25 @@ export const Home = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [acessed, setAcessed] = useState(0);
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-
-  const { userLogging, setUserLogging } = useContext(UserContext);
+  const { user, userLogging, setUserLogging } = useContext(UserContext);
+  
   const handleUpdate = () => {};
   const handleLogOut = () => {
-    window.location.href = "/";
+    setAcessed(1);
     setUserLogging(false);
   };
   const handleDelete = () => {};
 
   useEffect(() => {
-    if(userLogging==false){
-      alert("Erro! Faça o login novamente!")
+    if(userLogging == false || user.admin == true){
       window.location.href = "/";
-    } 
+      if(acessed==0) {
+        alert("Erro! Faça login novamente!")
+      }
+      return
+    }
   })
 
   return (

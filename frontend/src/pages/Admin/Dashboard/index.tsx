@@ -1,9 +1,25 @@
-import { Box, Button, Typography } from "@mui/material";
+import { useState, useContext } from "react";
+import { UserContext } from "@/contexts/user";
 
+import { Box, Button, Typography } from "@mui/material";
 import { User } from "@/components";
 
 export const Dashboard = () => {
-  const handleLogOut = () => {};
+  const {user, adminLogging, setAdminLogging} = useContext(UserContext)
+  const [acessed, setAcessed] = useState(0);
+
+  const handleLogOut = () => {
+    setAcessed(1);
+    setAdminLogging(false);
+  };
+
+  if(adminLogging == false || user.admin ==  false) {
+    window.location.href = "/admin";
+    if(acessed==0) {
+      alert("Para ter acesso, faça o login!");
+    }
+    return
+  }
 
   return (
     <Box sx={{ width: 500, margin: "20px auto" }}>

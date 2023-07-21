@@ -6,6 +6,7 @@ import { useStorage } from "@/hooks/useStorage";
 interface iUserContext {
   user: iUser;
   userLogging: boolean;
+  adminLogging: boolean;
   setUser: (user: iUser) => void;
   setUserLogging: (state: boolean) => void;
   setAdminLogging: (state: boolean) => void;
@@ -22,7 +23,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [userLogging, setUserLogging ] =  useStorage("logged", false);
   const [adminLogging, setAdminLogging] = useStorage("logged", false);
   return (
-    <UserContext.Provider value={{ user, setUser, setAdminLogging, userLogging, setUserLogging }}>
+    <UserContext.Provider value={{ user, setUser, adminLogging, setAdminLogging, userLogging, setUserLogging }}>
       {children}
     </UserContext.Provider>
   );
