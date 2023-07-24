@@ -1,14 +1,14 @@
 import { Box, Button, Typography } from "@mui/material";
+import { iUser } from "@/config/types";
 
 interface UserProps {
-  id: number;
+  id?: number;
   name: string;
   email: string;
+  handleRemove: (id: number | undefined | iUser) => void;
 }
 
-export const User = ({ id, name, email }: UserProps) => {
-  const handleRemove = () => {};
-
+export const User = ({ id, name, email, handleRemove }: UserProps) => {
   return (
     <Box
       sx={{
@@ -23,7 +23,7 @@ export const User = ({ id, name, email }: UserProps) => {
       </Typography>
       <Button
         sx={{ background: "#ff0026", color: "#fff" }}
-        onClick={handleRemove}
+        onClick={() => handleRemove(id)}
       >
         Remover
       </Button>

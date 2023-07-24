@@ -1,6 +1,7 @@
 export interface iUser {
-  name: string;
+	name: string;
 	admin: boolean;
 	email: string;
 	password: string;
+	id?: number;
 }
