@@ -8,43 +8,56 @@ import { iUser } from "@/config/types";
 
 export const SigninAdmin = () => {
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [newAdmin, setNewAdmin] = useState<iUser>({ name: "", admin: true, email: "", password: ""});
+  const [newAdmin, setNewAdmin] = useState<iUser>({
+    name: "",
+    admin: true,
+    email: "",
+    password: "",
+  });
+  const [validEmail, setValidEmail] = useState(true);
+  const [completedEmail, setCompletedEmail] = useState(false);
 
-    const handleInputData = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = event.target;
-    setNewAdmin((prevUser) => ({...prevUser, [name]: value}))
+  const handleInputData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    if (name === "email") {
+      const emailRegex = /^\w+@[a-z]+(\.[a-z]+)+$/;
+      setValidEmail(false);
+      if (emailRegex.test(value)) {
+        setValidEmail(true);
+        setCompletedEmail(true);
+        console.log(validEmail);
+      }
+    }
   };
 
   const handleSignin = async () => {
-    console.log("Dados de cadastro de novo usuário:", newAdmin)
-    if (newAdmin.password !== passwordConfirmation) {
-      console.error('A senha e a confirmação de senha não correspondem');
-      alert('A senha e a confirmação de senha não correspondem');
+    console.log("Dados de cadastro de novo usuário:", newAdmin);
+    if (newAdmin.password !== passwordConfirmation && !completedEmail) {
+      console.error("A senha e a confirmação de senha não correspondem");
+      alert("A senha e a confirmação de senha não correspondem");
 
       return;
     } else {
-        try {
-          const response = await fetch("http://localhost:5000/users", {
-            method: 'POST', 
-            headers: {
-              'Content-Type': 'application/json', 
-            },
-            body: JSON.stringify(newAdmin),
-          });
+      try {
+        const response = await fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newAdmin),
+        });
 
-          if (response.ok) {
-            const userData = await response.json();
-            alert("Cadastro realizado com sucesso!")
-          } else {
-            console.error("erro no cadastro!!!")
-          }
-        } catch(error) {
-          console.log("Erro!!!", error);
+        if (response.ok) {
+          const userData = await response.json();
+          alert("Cadastro realizado com sucesso!");
+        } else {
+          console.error("erro no cadastro!!!");
         }
-        console.log("handle sign in");
+      } catch (error) {
+        console.log("Erro!!!", error);
+      }
+      console.log("handle sign in");
     }
   };
 
@@ -91,7 +104,9 @@ export const SigninAdmin = () => {
           value={passwordConfirmation}
           placeholder="confirme sua senha"
         />
-        <Button onClick={handleSignin}>Sign IN</Button>
+        <Button onClick={handleSignin} disabled={!validEmail}>
+          Sign IN
+        </Button>
       </Box>
       <Typography>
         Caso já tenha uma conta, basta{" "}
