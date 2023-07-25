@@ -31,7 +31,8 @@ export const SigninUser = () => {
           });
 
           if (response.ok) {
-            const userData = response.json();
+            const userData = await response.json();
+            alert("Cadastro realizado com sucesso!")
           } else {
             console.error("erro de cadastro!!!")
           }

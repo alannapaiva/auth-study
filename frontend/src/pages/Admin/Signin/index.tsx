@@ -37,6 +37,7 @@ export const SigninAdmin = () => {
 
           if (response.ok) {
             const userData = await response.json();
+            alert("Cadastro realizado com sucesso!")
           } else {
             console.error("erro no cadastro!!!")
           }
